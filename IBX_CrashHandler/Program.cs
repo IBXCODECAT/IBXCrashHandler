@@ -7,20 +7,20 @@ namespace IBX_CrashHandler
         public static void Main(string[] args)
         {
             // HostFactory.Run() will run the entire time the service is running
-            TopshelfExitCode exitCode = HostFactory.Run(x => 
+            TopshelfExitCode exitCode = HostFactory.Run(hostConfigurator => 
             {
-                x.Service<Heartbeat>(s =>
+                hostConfigurator.Service<CrashHandlerService>(s =>
                 {
-                    s.ConstructUsing(heartbeat => new Heartbeat());
+                    s.ConstructUsing(heartbeat => new CrashHandlerService());
                     s.WhenStarted(heartbeat => heartbeat.Start());
                     s.WhenStopped(heartbeat => heartbeat.Stop());
                 });
 
-                x.RunAsLocalSystem();
+                hostConfigurator.RunAsLocalSystem();
 
-                x.SetInstanceName("IBXService");
-                x.SetDisplayName("IBX Crash Handler");
-                x.SetDescription("This service is designed to monitor games developed by IBX (Nathan Schmitt) and watch for game crashes. If a crash is detected this service will handle it gracefully.");
+                hostConfigurator.SetInstanceName("IBXService");
+                hostConfigurator.SetDisplayName("IBX Crash Handler");
+                hostConfigurator.SetDescription("This service is designed to monitor games developed by IBX (Nathan Schmitt) and watch for game crashes. If a crash is detected this service will handle it gracefully.");
             });
 
             // Capture exit code

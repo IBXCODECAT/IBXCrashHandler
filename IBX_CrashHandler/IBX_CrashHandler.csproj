@@ -11,4 +11,10 @@
     <PackageReference Include="Topshelf" Version="4.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="INIFileParser">
+      <HintPath>..\..\..\..\Downloads\INIFileParser.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
