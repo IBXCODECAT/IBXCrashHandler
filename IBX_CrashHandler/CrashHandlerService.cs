@@ -44,8 +44,13 @@ namespace IBX_CrashHandler
             else
             {
                 File.AppendAllText(logPath, $"{DateTime.Now} - Initialization file {iniPath} not found\n");
-                File.AppendAllText(logPath, $"{DateTime.Now} - Service stopping...\n");
-                Environment.Exit(0);
+                ForceStop();
+            }
+
+            if(!File.Exists(targetProcessPath))
+            {
+                File.AppendAllText(logPath, $"{DateTime.Now} - The executable '{targetProcessPath}' does not exist.");
+                ForceStop();
             }
 
             targetProcessFilename = Path.GetFileName(targetProcessPath);
@@ -62,8 +67,12 @@ namespace IBX_CrashHandler
         public void Stop()
         {
             _timer.Stop();
+        }
 
-            
+        private void ForceStop()
+        {
+            File.AppendAllText(logPath, $"{DateTime.Now} - Service stopping...\n");
+            Environment.Exit(0);
         }
 
         private void OnElapse(object? sender, ElapsedEventArgs e)

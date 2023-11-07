@@ -16,7 +16,7 @@ namespace IBX_CrashHandler
                     s.WhenStopped(heartbeat => heartbeat.Stop());
                 });
 
-                hostConfigurator.RunAsLocalSystem();
+                hostConfigurator.RunAsLocalService();
 
                 hostConfigurator.SetInstanceName("IBXService");
                 hostConfigurator.SetDisplayName("IBX Crash Handler");
